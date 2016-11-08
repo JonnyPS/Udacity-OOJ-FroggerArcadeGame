@@ -2,15 +2,25 @@ var canvasWidth = 505;
 var verticalMove = 83;
 var sidewaysMove = 100;
 var arr = [];
+var randomYpos = [60, 144, 228, 312, 400];
 
 // create Enemy class and protype methods
-var Enemy = function( name, speed, yPos ) {
+var Enemy = function( name, speed ) {
   this.sprite = 'images/enemy-bug.png';
   this.name = name;
   this.x = -100;
-  this.y = yPos;
+  this.y = setYpos;
   this.speed = speed;
 };
+
+
+Enemy.prototype.setYpos = function() {
+    console.log( 'this y pos' );
+    for ( var i = 0; i < randomYpos.length; i++ ) {
+      var ranNum = randomYpos[Math.floor(Math.random()*randomYpos.length)];
+      // return ranNum;
+    }
+  }();
 
 Enemy.prototype.update = function(dt, speed) {
   this.x = this.x + ( this.speed * dt );
@@ -21,15 +31,18 @@ Enemy.prototype.update = function(dt, speed) {
 
 Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y); 
-  for ( var i = 0; i < allEnemies.length; i++ ) {
-    var xPos = Math.round( allEnemies[i].x );
-    console.log( 'item number ' + i + '   ' + xPos )
-    if ( xPos > arr[0] - 50 && xPos < arr[0] ) {
-      console.log('/////////////////////////////////////////////////////////////////////////////')
-      console.log('WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE')
-      console.log('/////////////////////////////////////////////////////////////////////////////')    
-    }
-  }
+  // for ( var i = 0; i < allEnemies.length; i++ ) {
+  //   var xPos = Math.round( allEnemies[i].x );
+  //   console.log( 'item number ' + i + '   ' + xPos )
+  //   if ( xPos > arr[0] - 50 && xPos < arr[0] ) {
+  //     console.log('/////////////////////////////////////////////////////////////////////////////')
+  //     console.log('WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE')
+  //     console.log('/////////////////////////////////////////////////////////////////////////////')    
+  //   }
+  // }
+  // for ( var j = 0; j < allEnemies.length; j++ ) {
+  //   console.log( allEnemies[j].y )
+  // }
 };
 
 // create Player class and protype methods
@@ -97,12 +110,13 @@ Player.prototype.handleInput = function( keyPressed ) {
 };
 
 // Now instantiate your objects.
-var bugOne = new Enemy( 'Bob', 40, verticalMove*3 )
-var bugTwo = new Enemy( 'Ted', 20, 0 )
-var bugThree = new Enemy( 'Hugh', 50, 400 )
+var bugOne = new Enemy( 'Bob', 40 )
+var bugTwo = new Enemy( 'Ted', 20 )
+var bugThree = new Enemy( 'Hugh', 50 )
 
 // Place all enemy objects in an array called allEnemies
 var allEnemies = [ bugOne, bugTwo, bugThree ];
+
 
 // console.log( allEnemies )
 
@@ -124,12 +138,12 @@ document.addEventListener('keyup', function(e) {
 setInterval(myFunc, 100);
 
 function myFunc() {
-  console.log('myFunc')
-  if ( enemyXpos[0] < arr[0] && enemyXpos[0] >= arr[0] - 50  ) {
-    console.log('//////////////////////////////////////////////////////////////////////////////')
-    console.log('WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE')
-    console.log('//////////////////////////////////////////////////////////////////////////////')
-  }
+  // console.log('myFunc')
+  // if ( enemyXpos[0] < arr[0] && enemyXpos[0] >= arr[0] - 50  ) {
+  //   console.log('//////////////////////////////////////////////////////////////////////////////')
+  //   console.log('WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE')
+  //   console.log('//////////////////////////////////////////////////////////////////////////////')
+  // }
 }
 
 
