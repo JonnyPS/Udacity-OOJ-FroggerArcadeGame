@@ -1,52 +1,38 @@
-
+var canvasWidth = 505;
 var verticalMove = 83;
 var sidewaysMove = 100;
-// var speed = 20;
-var canvasWidth = 505;
-var imgSrc = document.getElementsByClassName( 'imgChar' );
+var arr = [];
 
-
-
-
-// console.log( canvasWidth )
-// Enemies our player must avoid
+// create Enemy class and protype methods
 var Enemy = function( name, speed, yPos ) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-    this.name = name;
-    this.x = -100;
-    this.y = yPos;
-    this.speed = speed;
+  this.sprite = 'images/enemy-bug.png';
+  this.name = name;
+  this.x = -100;
+  this.y = yPos;
+  this.speed = speed;
 };
 
-
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt, speed) {
   this.x = this.x + ( this.speed * dt );
-  // console.log( this.x )
   if ( this.x >= canvasWidth ) {
-    this.x =  -sidewaysMove;
+    this.x =  -sidewaysMove; 
   }
-  // You should multiply any movement by the dt parameter
-  // which will ensure the game runs at the same speed for
-  // all computers.
 };
 
-// Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-  // console.log( this.x )
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y); 
+  for ( var i = 0; i < allEnemies.length; i++ ) {
+    var xPos = Math.round( allEnemies[i].x );
+    console.log( 'item number ' + i + '   ' + xPos )
+    if ( xPos > arr[0] - 50 && xPos < arr[0] ) {
+      console.log('/////////////////////////////////////////////////////////////////////////////')
+      console.log('WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE')
+      console.log('/////////////////////////////////////////////////////////////////////////////')    
+    }
+  }
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// create Player class and protype methods
 var Player = function() {
   this.sprite = 'images/char-boy.png';
   this.x = 200;
@@ -57,9 +43,22 @@ Player.prototype.update = function() {
   // code goes here
 };
 
-Player.prototype.render = function() {
+Player.prototype.render = function( ) {
+  var xPos = this.x;
+  var yPos = this.y;
+
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+  //  arr.push( function() {
+  //     console.log( xPos, yPos );
+  // });
+  arr[0] = xPos;
+  // console.log('arr = ' + arr[0])
+  // console.log(arr[0])
+
 };
+
+
 
 Player.prototype.handleInput = function( keyPressed ) {
   switch ( keyPressed ) {
@@ -82,7 +81,7 @@ Player.prototype.handleInput = function( keyPressed ) {
       console.log( 'about to walk off the left of the board' )
     } else {
       this.x = this.x - sidewaysMove;
-      console.log( this.x )
+      // console.log( this.x )
     }  
     break;
     case 'right': 
@@ -94,11 +93,7 @@ Player.prototype.handleInput = function( keyPressed ) {
     break;
     default: console.log('another key pressed')
   }
-};
-
-Player.prototype.assignChar = function( src ) {
-  console.log( assignChar )
-  this.sprite = src;
+  // console.log( 'boy yPos = ' + this.y)
 };
 
 // Now instantiate your objects.
@@ -107,24 +102,12 @@ var bugTwo = new Enemy( 'Ted', 20, 0 )
 var bugThree = new Enemy( 'Hugh', 50, 400 )
 
 // Place all enemy objects in an array called allEnemies
-// var allEnemies = [bugOne, bugTwo, bugThree];
-var allEnemies = [bugOne, bugTwo, bugThree ];
-console.log( allEnemies )
+var allEnemies = [ bugOne, bugTwo, bugThree ];
 
-
-var choosePlayer = function( src ) {
-  // console.log( 'choosePlayer' )
-  // console.log( imgSrc )
-  console.log( src )
-  // Player.assignChar( src );
-  Player.sprite = src;
-  console.log( Player.sprite );
-  console.log( Player )
-}
+// console.log( allEnemies )
 
 // Place the player object in a variable called player
 var player = new Player();
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -138,6 +121,34 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+setInterval(myFunc, 100);
+
+function myFunc() {
+  console.log('myFunc')
+  if ( enemyXpos[0] < arr[0] && enemyXpos[0] >= arr[0] - 50  ) {
+    console.log('//////////////////////////////////////////////////////////////////////////////')
+    console.log('WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE')
+    console.log('//////////////////////////////////////////////////////////////////////////////')
+  }
+}
 
 
+// setInterval(myFunc, 1000)
+// // console.log(arr[0]())
+// function myFunc() {
+//   console.log(arr[0])
+// }
 
+// if ( arr[0] == 100 ) {
+
+//   console.log('PLAYER IS POSITIONED');
+// }
+// if ( enemyXpos[0] == 100 ) {
+//   console.log('ENEMY IS POSITIONED');
+// }
+
+// if ( enemyXpos[0] === arr[0] ) {
+//   console.log('/////////////////////////////////////////////////')
+//   console.log('MAYDAY MAYDAY MAYDAY COLLISION COLLISION COLLISION')
+//   console.log('/////////////////////////////////////////////////')
+// }
