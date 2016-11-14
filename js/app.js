@@ -10,7 +10,6 @@ var livesNum = 3;
 var livesContainer = document.getElementById('lives');
 var yPos = [68, 151, 234, 317];
 
-
 // window.onload = function() {
   document.getElementById('lives').innerHTML = 'Lives = ' + livesNum; 
 // }
@@ -36,10 +35,12 @@ var yPos = [68, 151, 234, 317];
     if ( this.x >= canvasWidth ) {
       this.x =  -sidewaysMove; 
     }
+    console.log( 'update' )
   };
 
   Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y); 
+
   };
 
   // create Player class and protype methods
@@ -121,7 +122,35 @@ var yPos = [68, 151, 234, 317];
       player.handleInput(allowedKeys[e.keyCode]);
   });
 
+  var instantiateCharacters = function() {
+    console.log( 'gameReset' );    
+    var bugOne = new Enemy( 'Bob', 40 )
+    var bugTwo = new Enemy( 'Ted', 20 )
+    var bugThree = new Enemy( 'Hugh', 50 )
+    var allEnemies = [ bugOne, bugTwo, bugThree ];
+    var player = new Player();
+  }
+
+function resetGame() {
+  console.log( 'gameReset' );
+  player.x = 200;
+  player.y = 400;
+  for ( var i = 0; i < allEnemies.length; i++ ) {
+    allEnemies[i].x = -100;
+  }
+  bugOne.speed = 40;
+  bugTwo.speed = 20;
+  bugThree.speed = 50;
+
+
   var detectCollision = setInterval(myFunc, 250);
+
+}
+
+
+  var detectCollision = setInterval(myFunc, 250);
+
+
 
   function myFunc() {
     for ( var i = 0; i < allEnemies.length; i++ ) {
@@ -134,12 +163,14 @@ var yPos = [68, 151, 234, 317];
           console.log('/////////////////////////////////////////////////////////////////////////////')
           console.log('WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE')
           console.log('/////////////////////////////////////////////////////////////////////////////')   
-          Enemy.prototype.update = function() {
-            this.x = this.x;
-          }
-          livesNum--;
+          // for ( var i = 0; i < allEnemies.length; i++ ) {
+          //   allEnemies[i].speed = 0;
+          // }
+
+          livesNum = livesNum-1;
           console.log(livesNum)
           document.getElementById('lives').innerHTML = 'Lives = ' + livesNum; 
+          // setTimeout(resetGame, 3000);
         }
       }
     }
@@ -147,3 +178,4 @@ var yPos = [68, 151, 234, 317];
       // console.log( allEnemies[j].y )
     }
   }
+
