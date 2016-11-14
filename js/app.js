@@ -4,10 +4,12 @@ var sidewaysMove = 100;
 var arr = [];
 var collisionCount = 1;
 // var randomYpos = [60, 144, 228, 312, 400];
-var randomYpos = [68, 151, 234, 317];
+// var randomYpos = [68, 151, 234, 317];
 var enemyYpos = [];
 var livesNum = 3;
 var livesContainer = document.getElementById('lives');
+var yPos = [68, 151, 234, 317];
+
 
 // window.onload = function() {
   document.getElementById('lives').innerHTML = 'Lives = ' + livesNum; 
@@ -15,8 +17,9 @@ var livesContainer = document.getElementById('lives');
 
   // create Enemy class and protype methods
   var Enemy = function( name, speed ) {
-    var yPos = [68, 151, 234, 317];
     var randomItem = yPos[Math.floor(Math.random()*yPos.length)];
+    yPos.splice(randomItem, 1);
+    console.log(yPos)
     this.sprite = 'images/enemy-bug.png';
     this.name = name;
     this.x = -100;
@@ -144,7 +147,3 @@ var livesContainer = document.getElementById('lives');
       // console.log( allEnemies[j].y )
     }
   }
-
-
-
-
