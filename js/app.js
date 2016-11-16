@@ -35,7 +35,7 @@ var yPos = [68, 151, 234, 317];
     if ( this.x >= canvasWidth ) {
       this.x =  -sidewaysMove; 
     }
-    console.log( 'update' )
+    // console.log( 'update' )
   };
 
   Enemy.prototype.render = function() {
@@ -143,14 +143,15 @@ function resetGame() {
   bugThree.speed = 50;
 
 
-  var detectCollision = setInterval(myFunc, 250);
-
+  // var detectCollision = setInterval(myFunc, 250);
+  updateCollisionDetection();
 }
 
+function updateCollisionDetection() {
+  detectCollision = setInterval(myFunc, 250);
+}
 
-  var detectCollision = setInterval(myFunc, 250);
-
-
+updateCollisionDetection();
 
   function myFunc() {
     for ( var i = 0; i < allEnemies.length; i++ ) {
@@ -163,14 +164,18 @@ function resetGame() {
           console.log('/////////////////////////////////////////////////////////////////////////////')
           console.log('WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE WITHIN RANGE')
           console.log('/////////////////////////////////////////////////////////////////////////////')   
-          // for ( var i = 0; i < allEnemies.length; i++ ) {
-          //   allEnemies[i].speed = 0;
-          // }
+          for ( var i = 0; i < allEnemies.length; i++ ) {
+            allEnemies[i].speed = 0;
+          }
 
           livesNum = livesNum-1;
           console.log(livesNum)
           document.getElementById('lives').innerHTML = 'Lives = ' + livesNum; 
-          // setTimeout(resetGame, 3000);
+          if ( livesNum == 0 ) {
+            document.getElementById('lives').innerHTML = 'GAME OVER'; 
+          } else {
+            setTimeout(resetGame, 100);
+          }
         }
       }
     }
